@@ -1,0 +1,24 @@
+{
+  "name": "puppeteer-investigation",
+  "version": "0.0.1",
+  "description": "An investigation of front-end testing with puppeteer",
+  "main": "main.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "jest",
+    "puppeteer",
+    "test"
+  ],
+  "author": "mustafa ilhan",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^25.1.0",
+    "jest-puppeteer": "^4.4.0",
+    "puppeteer": "^2.1.1"
+  },
+  "jest": {
+    "preset": "jest-puppeteer"
+  }
+}
