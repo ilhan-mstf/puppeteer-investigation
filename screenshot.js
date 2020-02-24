@@ -3,8 +3,8 @@ const puppeteer = require('puppeteer');
 (async () => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  await page.goto('https://designisdead.com/');
-  await page.screenshot({path: 'designisdead_home_page.png'});
+  await page.goto('http://localhost:8000/');
+  await page.screenshot({path: 'version3.png'});
 
   await browser.close();
 })();
