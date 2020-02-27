@@ -4,7 +4,7 @@
   "description": "An investigation of front-end testing with puppeteer",
   "main": "main.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --maxWorkers=1"
   },
   "keywords": [
     "jest",
