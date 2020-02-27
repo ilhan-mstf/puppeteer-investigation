@@ -1,36 +1,28 @@
-# Automated tests with Puppeeter
-Software testing is a serious and required task to catch a certain quality. This blog post focuses on how it can be automated with Puppeeter. Before going into the details of Puppeeter, we should go over the software testing and make clear the concepts and levels of it.
+# Automated tests with Puppeteer
+Software testing is a serious and required task to reach certain quality. This blog post focuses on how it can be automated with Puppeteer. Before going into the details of Puppeteer, we should go over the software testing and clearify the concepts related with testing in software.
 
 ## Software Testing
 "Production-ready software requires testing before it goes into production" [1]. One approach is to follow manual testing and the other approach is to automate whole testing process. "It's obvious that testing all changes manually is time-consuming, repetitive [, not scalable] and tedious. Repetitive is boring, boring leads to mistakes" [1] that we don't want. Therefore, automation is a great alternative for those repetitive tasks. Further, automation of tests can deliver requested pace and reliability of the software product in a massive scale. In addition to these ensuring the reliability and stability of the software is also very important for the developers in order not to lose time on bugs created by changing code blocks. Especially, it becomes very curial when team size increases.
 
-<!--It becomes very important when a lot of people join the development to ensure the stability of the software.-->
-
-<!--Even if you change small part of the software, it may effect other parts therefore to make sure that everything works as expected you need test-->
-
-Test pyramid is a common concept to follow when you want to apply automated tests in your software. This concept also defines how much tests you should add into your system. There are three layers of these pyramid:
-- Unit Tests
-- Service Tests
+Test pyramid [2] is a key concept to follow when you want to write automated tests in your software. This concept also defines how much tests you should add into your software. There are three layers of this pyramid:
+- Unit Tests 
+  - Tests that cover isolated pieces of code, e.g. functions, etc.
+- Service Tests 
+  - Currently, this is actually accepted as Integration Tests by the community. Tests that cover connected pieces of application, e.g. database, filesystem, etc.
 - User Interface Tests
+  - Again, this is actually accepted as End-to-End Tests by the community. Tests that cover whole journey of a functionality from user interaction to services, e.g. login flow, purchase flow, etc.
 
 ![Test Pyramid](testPyramid.png)
 
 Generally, this pyramid suggests that:
-- Write tests with different granularity
-- The more high-level you get the fewer tests you should have
+- "Write tests with different granularity" [1]
+- "The more high-level you get the fewer tests you should have" [1]
 
-But this approach may not suit for everyone. In your software, for example, you may have less business logic and more integration. In this case, you may want to add more integration tests to your software. Therefore, it is best to think how many tests you should write for each granularity. (You can check this post as well https://kentcdodds.com/blog/write-tests)
+But this approach may not suit for each case. In your software, for instance, you may have less business logic and more integration. In this case, you may want to add more integration tests to your software. Therefore, it is best to think how many tests you should write for each granularity. (You can check this post for more discussion (https://kentcdodds.com/blog/write-tests)[https://kentcdodds.com/blog/write-tests])
 
-<!-- Another case is that -->
-
-https://twitter.com/erinfranmc/status/1148986961207730176?s=20
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">expect(umbrellaOpens).toBe(true)<br><br>tests: 1 passed, 1 total<br><br>**all tests passed** <a href="https://t.co/p6IKO7KDuy">pic.twitter.com/p6IKO7KDuy</a></p>&mdash; Erin 🐠 (@erinfranmc) <a href="https://twitter.com/erinfranmc/status/1148986961207730176?ref_src=twsrc%5Etfw">July 10, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 <!--
-Unit testing – With unit tests we are testing small isolated pieces of our code.
-Integration testing - In this type of testing we combine and test individual units and test them as a group.
-End-to-End (E2E) testing - Is defined as the testing of complete functionality of some application.
--->
-
 ## When do you need ui testing?
 In the days of single page application frameworks like react, angular, ember.js and others it becomes apparent that UI tests don't have to be on the highest level of your pyramid - you're perfectly able to unit test your UI in all of these frameworks [1].
 
@@ -40,6 +32,11 @@ ui testing doesn't have to be end-to-end, you may only want to test layout of yo
 try to reduce the number of end-to-end tests since its hard to maintain them. Therefore, it is a good idea to test most imprtant features of your application.
 
 headless browser (i.e. a browser that doesn't have a user interface)
+-->
+
+### When do you really need end-to-end testing?
+high value interaction
+it is hard to maintain, costly in terms of computation.
 
 ## What is puppeteer?
 Puppeteer is a Node library which provides a high-level API to control Chrome or Chromium over the DevTools Protocol. Puppeteer runs headless by default, but can be configured to run full (non-headless) Chrome or Chromium.
@@ -162,6 +159,7 @@ Since search engines crawl your production website, it may be a good idea to che
 
 ## References:
 [1] https://martinfowler.com/articles/practical-test-pyramid.html
+[2] Mike Cohn, Succeeding with Agile
 
 Add this also:
 https://martinfowler.com/bliki/TestPyramid.html 
