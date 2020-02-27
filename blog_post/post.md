@@ -1,8 +1,10 @@
 # Automated tests with Puppeeter
-Testing of software products is a serious and required task and this blog post focus on how it can be automated with Puppeeter. Before going into the details of Puppeeter, we should go over the software testing and make clear the concepts and levels of it.
+Software testing is a serious and required task to catch a certain quality. This blog post focuses on how it can be automated with Puppeeter. Before going into the details of Puppeeter, we should go over the software testing and make clear the concepts and levels of it.
 
-## Testing of a Software
-"Production-ready software requires testing before it goes into production" [1]. One approach is to follow manual testing and the other approach is to automate whole testing process. "It's obvious that testing all changes manually is time-consuming, repetitive and tedious. Repetitive is boring, boring leads to mistakes and makes you look for a different job by the end of the week" [1]. Therefore, automation is a great alternative for these repetitive tasks. Further, automation of tests can deliver requested pace and reliability of the software product.
+## Software Testing
+"Production-ready software requires testing before it goes into production" [1]. One approach is to follow manual testing and the other approach is to automate whole testing process. "It's obvious that testing all changes manually is time-consuming, repetitive [, not scalable] and tedious. Repetitive is boring, boring leads to mistakes" [1] that we don't want. Therefore, automation is a great alternative for those repetitive tasks. Further, automation of tests can deliver requested pace and reliability of the software product in a massive scale. In addition to these ensuring the reliability and stability of the software is also very important for the developers in order not to lose time on bugs created by changing code blocks. Especially, it becomes very curial when team size increases.
+
+<!--It becomes very important when a lot of people join the development to ensure the stability of the software.-->
 
 <!--Even if you change small part of the software, it may effect other parts therefore to make sure that everything works as expected you need test-->
 
@@ -15,12 +17,24 @@ Test pyramid is a common concept to follow when you want to apply automated test
 
 Generally, this pyramid suggests that:
 - Write tests with different granularity
-- he more high-level you get the fewer tests you should have
+- The more high-level you get the fewer tests you should have
+
+But this approach may not suit for everyone. In your software, for example, you may have less business logic and more integration. In this case, you may want to add more integration tests to your software. Therefore, it is best to think how many tests you should write for each granularity. (You can check this post as well https://kentcdodds.com/blog/write-tests)
+
+<!-- Another case is that -->
+
+https://twitter.com/erinfranmc/status/1148986961207730176?s=20
+
+<!--
+Unit testing – With unit tests we are testing small isolated pieces of our code.
+Integration testing - In this type of testing we combine and test individual units and test them as a group.
+End-to-End (E2E) testing - Is defined as the testing of complete functionality of some application.
+-->
 
 ## When do you need ui testing?
-In the days of single page application frameworks like react, angular, ember.js and others it becomes apparent that UI tests don't have to be on the highest level of your pyramid - you're perfectly able to unit test your UI in all of these frameworks.[1]
+In the days of single page application frameworks like react, angular, ember.js and others it becomes apparent that UI tests don't have to be on the highest level of your pyramid - you're perfectly able to unit test your UI in all of these frameworks [1].
 
-## Difference between ui-testing and end-to-end testing
+## Difference between ui testing and end-to-end testing
 ui testing doesn't have to be end-to-end, you may only want to test layout of your application. 
 
 try to reduce the number of end-to-end tests since its hard to maintain them. Therefore, it is a good idea to test most imprtant features of your application.
@@ -29,6 +43,9 @@ headless browser (i.e. a browser that doesn't have a user interface)
 
 ## What is puppeteer?
 Puppeteer is a Node library which provides a high-level API to control Chrome or Chromium over the DevTools Protocol. Puppeteer runs headless by default, but can be configured to run full (non-headless) Chrome or Chromium.
+
+## Jest and Puppeteer
+Writing integration test can be done using Puppeteer API but it can be complicated and hard because API is not designed for testing.
 
 ### Use cases:
 - Generate screenshots and PDFs of pages.
@@ -39,6 +56,20 @@ Puppeteer is a Node library which provides a high-level API to control Chrome or
 - Test Chrome Extensions.
 
 You need a web-ui to use this tool.
+
+- Check for Console Logs and Exceptions with Puppeteer
+- Replicate User Activity with Faker and Puppeteer
+- Work with Document Cookies in Tests with Puppeteer
+
+
+Schedule Selenium Test Automation At Peak Hours
+https://www.lambdatest.com/blog/why-selenium-automation-testing-in-production-is-pivotal-for-your-next-release/
+
+Regression Testing Effort
+
+### Who uses puppeteer for what
+Coursera - https://medium.com/coursera-engineering/improving-end-to-end-testing-at-coursera-using-puppeteer-and-jest-5f1bac9cd176
+
 
 ### How to use it? Which languages?
 It is a Node library, therefore its api is 
@@ -62,6 +93,11 @@ You can use your own chrome in your computer. or you can use download it when in
 ### Samples
 This section gives a couple of examples to give you a better insights of its usage. They don't cover all the futures of the puppeteer.
 
+Tests are also available at github page.
+
+jest-puppeteer
+you need another library to add fully featured testing capabalities to puppeteer since it doesn't provide you. In this blog post jest is used as tesing framework.
+
 #### Taking Screenshot
 You can take screenshot of your website with different options. In certain times for example (in every 200 ms for example), or in different screen sizes.
 
@@ -70,16 +106,55 @@ You may want to check visually your elements how are they rendered and you can c
 - when texts are changes you are going to see as a change
 - 
 
+https://github.com/mapbox/pixelmatch
+https://meowni.ca/posts/2017-puppeteer-tests/
+
 #### Check layout
 For example, you can check that visual elements are rendered or not.
 
 #### Checking integration with third party application
 Especially third party application uses third party applications for analytics purposes. Therefore, it will be good idea to check integration with your website and their service.
 
-#### Mobile and desktop 
-Since there is significant variance in screen sizes, there are a lot cases needs to be tested here.
+<!-- signup, redirects -->
+
+#### Mobile and Desktop Layout
+Since there is significant variance in screen sizes, there are a lot cases need to be tested here.
+
+```js
+const devices = require('puppeteer/DeviceDescriptors');
+const iPhonex = devices['iPhone X'];
+
+describe('Mobile', () => {
+  beforeAll(async () => {
+    await page.emulate(iPhonex)
+    await page.goto('https://designisdead.com/')
+  })
+
+  it('should render hamburger menu', async () => {
+    await page.waitForSelector('.Page-hamburger', {
+      visible: true
+    })
+  })
+})
+```
+
+```js
+describe('Desktop', () => {
+  beforeAll(async () => {
+    await page.setViewport({ width: 1280, height: 768 })
+    await page.goto('https://designisdead.com/')
+  })
+
+  it('should not render hamburger menu', async () => {
+    await page.waitForSelector('.Page-hamburger', {
+      hidden: true
+    })
+  })
+})
+```
 
 #### Seo checks
+Since search engines crawl your production website, it may be a good idea to check your pages seo performance. However, even if below examples handles this issue on test cases, you may want to generate a score and corresponding report.
 
 ### Selenium and other testing tools
 
@@ -87,3 +162,12 @@ Since there is significant variance in screen sizes, there are a lot cases needs
 
 ## References:
 [1] https://martinfowler.com/articles/practical-test-pyramid.html
+
+Add this also:
+https://martinfowler.com/bliki/TestPyramid.html 
+https://kentcdodds.com/blog/write-tests
+https://www.freecodecamp.org/news/why-end-to-end-testing-is-important-for-your-team-cb7eb0ec1504/
+https://blogs.dropbox.com/tech/2019/05/athena-our-automated-build-health-management-system/
+https://medium.com/coursera-engineering/improving-end-to-end-testing-at-coursera-using-puppeteer-and-jest-5f1bac9cd176
+
+## Acknowledgements
