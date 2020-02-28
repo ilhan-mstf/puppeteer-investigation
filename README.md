@@ -103,12 +103,12 @@ fs.writeFileSync('diff.png', PNG.sync.write(diff));
 ```
 
 <img style="float: left; padding: 0 10px 10px 0" src="img/version1.png" width="200" align="left">
-<img style="float: left; padding: 0 10px 10px 0" src="img/version2.png" width="200"align="left">
-<img style="float: left; padding: 0 10px 10px 0" src="img/diff1-2.png" width="200"align="left">
+<img style="float: left; padding: 0 10px 10px 0" src="img/version2.png" width="200" align="left">
+<img style="float: left; padding: 0 10px 10px 0" src="img/diff1-2.png" width="200" align="left">
 
-<img style="float: left; padding: 0 10px 10px 0" src="img/version1.png" width="200"align="left">
-<img style="float: left; padding: 0 10px 10px 0" src="img/version3.png" width="200"align="left">
-<img style="float: left; padding: 0 10px 10px 0" src="img/diff1-3.png" width="200"align="left">
+<img style="float: left; padding: 0 10px 10px 0" src="img/version1.png" width="200" align="left">
+<img style="float: left; padding: 0 10px 10px 0" src="img/version3.png" width="200" align="left">
+<img style="float: left; padding: 0 10px 10px 0" src="img/diff1-3.png" width="200" align="left">
 
 <div style="clear: both"></div>
 
