@@ -4,7 +4,7 @@ Software testing is a serious and required task to reach certain quality. This b
 ## Software Testing
 "Production-ready software requires testing before it goes into production" [1]. One approach is to follow manual testing and the other approach is to automate whole testing process. "It's obvious that testing all changes manually is time-consuming, repetitive [, not scalable] and tedious. Repetitive is boring, boring leads to mistakes" [1] that we don't want. Therefore, automation is a great alternative for those repetitive tasks. Further, automation of tests can deliver requested pace and reliability of the software product in a massive scale. In addition to these ensuring the reliability and stability of the software is also very important for the developers in order not to lose time on bugs created by changing code blocks. Especially, it becomes very curial when team size increases.
 
-Test pyramid [2] is a key concept to follow when you want to write automated tests in your software. This concept also defines how much tests you should add into your software. There are three layers of this pyramid:
+Test pyramid [2] is a key concept to follow when you want to write automated tests in your software. This concept also defines how much tests you should add into your software for each level. There are three layers of this pyramid:
 - Unit Tests 
   - Tests that cover isolated pieces of code, e.g. functions, etc.
 - Service Tests 
@@ -12,110 +12,142 @@ Test pyramid [2] is a key concept to follow when you want to write automated tes
 - User Interface Tests
   - Again, this is actually accepted as End-to-End Tests by the community. Tests that cover whole journey of a functionality from user interaction to services, e.g. login flow, purchase flow, etc.
 
-![Test Pyramid](testPyramid.png)
+![Test Pyramid](img/testPyramid.png)
 
 Generally, this pyramid suggests that:
 - "Write tests with different granularity" [1]
 - "The more high-level you get the fewer tests you should have" [1]
 
-But this approach may not suit for each case. In your software, for instance, you may have less business logic and more integration. In this case, you may want to add more integration tests to your software. Therefore, it is best to think how many tests you should write for each granularity. (You can check this post for more discussion (https://kentcdodds.com/blog/write-tests)[https://kentcdodds.com/blog/write-tests])
+But this approach may not suit for each case. In your software, for instance, you may have less business logic and more integration. In this case, you may want to add more integration tests to your software. Therefore, it is best to think how many tests you should write for each granularity. (You can check this post for more discussion: [https://kentcdodds.com/blog/write-tests](https://kentcdodds.com/blog/write-tests))
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">expect(umbrellaOpens).toBe(true)<br><br>tests: 1 passed, 1 total<br><br>**all tests passed** <a href="https://t.co/p6IKO7KDuy">pic.twitter.com/p6IKO7KDuy</a></p>&mdash; Erin 🐠 (@erinfranmc) <a href="https://twitter.com/erinfranmc/status/1148986961207730176?ref_src=twsrc%5Etfw">July 10, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-<!--
-## When do you need ui testing?
-In the days of single page application frameworks like react, angular, ember.js and others it becomes apparent that UI tests don't have to be on the highest level of your pyramid - you're perfectly able to unit test your UI in all of these frameworks [1].
-
-## Difference between ui testing and end-to-end testing
-ui testing doesn't have to be end-to-end, you may only want to test layout of your application. 
-
-try to reduce the number of end-to-end tests since its hard to maintain them. Therefore, it is a good idea to test most imprtant features of your application.
-
-headless browser (i.e. a browser that doesn't have a user interface)
--->
-
 ### When do you really need end-to-end testing?
-high value interaction
-it is hard to maintain, costly in terms of computation.
+End to end tests are useful to indetify problems in the user journeys. User journeys are the flows that a user can follow in your application. Therefore, the idea of end-to-end test is to imitate user's behaviour in certain flows from start to end to unsure that everything works as expected. Running end-to-end tests are slower than to unit tests since they can touch many components of your application or third party services. As a result, we can think them as expensive in terms of resources that reserved for them. For instance, assume that you want to run end-to-end test of a web application, to accomplish this you need to run a browser and this browsers consumes significant amount of memory Therefore, you may want to add write end-to-end tests for high value interactions. These tests can also be scheduled to run in production system in peak usage hours to ensure the experience of your application under load [3].
 
-## What is puppeteer?
-Puppeteer is a Node library which provides a high-level API to control Chrome or Chromium over the DevTools Protocol. Puppeteer runs headless by default, but can be configured to run full (non-headless) Chrome or Chromium.
+## What is Puppeteer?
+[Puppeteer](https://pptr.dev/) provides a high-level API to control Chrome or Chromium programmatically. It is an open source Nodejs library. Puppeteer runs headless (i.e. a browser that doesn't have a user interface) by default, but can be configured to run full (non-headless) Chrome or Chromium.
 
-## Jest and Puppeteer
-Writing integration test can be done using Puppeteer API but it can be complicated and hard because API is not designed for testing.
+With this tool, you can run your web application on a browser
+and imitate user actions programmatically.
 
 ### Use cases:
 - Generate screenshots and PDFs of pages.
 - Crawl a SPA (Single-Page Application) and generate pre-rendered content (i.e. "SSR" (Server-Side Rendering)).
 - Automate form submission, UI testing, keyboard input, etc.
-- Create an up-to-date, automated testing environment. Run your tests directly in the latest version of Chrome using the latest JavaScript and browser features.
+- Create an up-to-date, automated testing environment. Run your tests directly in the latest version of Chrome using the latest JavaScript and browser features. Run regression and end-to-end tests.
 - Capture a timeline trace of your site to help diagnose performance issues.
 - Test Chrome Extensions.
+- Check for console logs and exceptions.
+- Replicate user activity with Faker.
+- Work with Document Cookies in Tests with Puppeteer.
 
-You need a web-ui to use this tool.
+### Jest and Puppeteer
+Puppeteer API is not designed for testing and it doesn't provide you the whole functionality of a testing framework. Therefore, it can be used with [Jest](https://jestjs.io/) testing framework. The samples on this blog post use [jest-puppeteer](https://www.npmjs.com/package/jest-puppeteer) Nodejs library.
 
-- Check for Console Logs and Exceptions with Puppeteer
-- Replicate User Activity with Faker and Puppeteer
-- Work with Document Cookies in Tests with Puppeteer
-
-
-Schedule Selenium Test Automation At Peak Hours
-https://www.lambdatest.com/blog/why-selenium-automation-testing-in-production-is-pivotal-for-your-next-release/
-
-Regression Testing Effort
-
-### Who uses puppeteer for what
-Coursera - https://medium.com/coursera-engineering/improving-end-to-end-testing-at-coursera-using-puppeteer-and-jest-5f1bac9cd176
-
-
-### How to use it? Which languages?
-It is a Node library, therefore its api is 
-
-### How to plug it to the ci/cd?
-
+<!--
 ### Running puppeteer on serverless
 You should allocate at least 512 MB of RAM to your Lambda, however 1600 MB (or more) is recommended.
 https://github.com/alixaxel/chrome-aws-lambda
-
-### How to install?
-- Recent stable version of node.js
-- Recent stable version of npm or yarn
-
-You can use your own chrome in your computer. or you can use download it when installing.
-
-`executablePath: 'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe'`
-
-`which google-chrome-stable`
+-->
 
 ### Samples
-This section gives a couple of examples to give you a better insights of its usage. They don't cover all the futures of the puppeteer.
+This section provides a couple of examples to give you a better insights of Puppeteer's usage. They don't cover all the futures of the Puppeteer and this blog post doesn't aim to give you detailed information of Puppeteer API. You can build upon the given examples and explained concepts.
 
-Tests are also available at github page.
+The shown examples are also available at this [GitHub repository](https://github.com/ilhan-mstf/puppeteer-investigation). 
 
-jest-puppeteer
-you need another library to add fully featured testing capabalities to puppeteer since it doesn't provide you. In this blog post jest is used as tesing framework.
+#### Prerequistes and Installation
+You need:
+- Recent stable version of node.js
+- Recent stable version of yarn or npm
+
+Examples have these dependencies:
+
+```json
+"devDependencies": {
+  "jest": "^25.1.0",
+  "jest-puppeteer": "^4.4.0",
+  "pixelmatch": "^5.1.0",
+  "puppeteer": "^2.1.1"
+}
+```
+
+`puppeteer` library downloads lastest Chrome executable. You can use `puppeteer-core` instead of `puppeteer` if you want to use existing Chrome executable in your system and pass the path of executable as a configuration option.
 
 #### Taking Screenshot
-You can take screenshot of your website with different options. In certain times for example (in every 200 ms for example), or in different screen sizes.
+You can take screenshot of your website with different options such as setting viewport or emulated device.
 
-#### Comparing Screenshot
-You may want to check visually your elements how are they rendered and you can check them with the previous version. You need another tool to compare images. There are concerns to be cared which they are 
-- when texts are changes you are going to see as a change
-- 
+```js
+const puppeteer = require('puppeteer');
 
-https://github.com/mapbox/pixelmatch
-https://meowni.ca/posts/2017-puppeteer-tests/
+(async () => {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.goto('https://designisdead.com/');
+  await page.screenshot({path: 'homepage.png'});
 
-#### Check layout
-For example, you can check that visual elements are rendered or not.
+  await browser.close();
+})();
+```
 
-#### Checking integration with third party application
-Especially third party application uses third party applications for analytics purposes. Therefore, it will be good idea to check integration with your website and their service.
+#### Comparing Screenshots
+You can detect changes visually by taking screenshots of different versions of your application. You can take screenshots with Puppeteer but you need another tool to compare them. This sample uses [`pixelmatch` library](https://www.npmjs.com/package/pixelmatch). Be aware that some of these tools find differences by checking the pixel difference, therefore, if the text is changed, they will show it as a change.
+
+```js
+const fs = require('fs');
+const PNG = require('pngjs').PNG;
+const pixelmatch = require('pixelmatch');
+
+const img1 = PNG.sync.read(fs.readFileSync('version1.png'));
+const img2 = PNG.sync.read(fs.readFileSync('version2.png'));
+const {width, height} = img1;
+const diff = new PNG({width, height});
+
+pixelmatch(img1.data, img2.data, diff.data, width, height, {threshold: 0.9});
+
+fs.writeFileSync('diff.png', PNG.sync.write(diff));
+```
+
+<img style="float: left; padding: 0 10px 10px 0" src="img/version1.png" width="200">
+<img style="float: left; padding: 0 10px 10px 0" src="img/version2.png" width="200">
+<img style="float: left; padding: 0 10px 10px 0" src="img/diff1-2.png" width="200">
+
+<img style="float: left; padding: 0 10px 10px 0" src="img/version1.png" width="200">
+<img style="float: left; padding: 0 10px 10px 0" src="img/version3.png" width="200">
+<img style="float: left; padding: 0 10px 10px 0" src="img/diff1-3.png" width="200">
+
+<div style="clear: both"></div>
+
+<!--
+![Version 1](img/version1.png)
+![Version 2](img/version2.png)
+![Diff 1-2](img/diff1-2.png)
+
+![Version 1](img/version1.png)
+![Version 3](img/version3.png)
+![Diff 1-3](img/diff1-3.png)
+-->
+
+#### Checking integration of third party applications
+You may use third party services, scripts etc. in your application. Therefore, it will be good idea to check that their integration wit your application works as expected.
+
+```js
+describe('Analytics', () => {
+  beforeAll(async () => {
+    await page.goto('https://designisdead.com/')
+  })
+
+  it('should return google tag manager', async () => {
+    const tagManager = await page.evaluate(() => google_tag_manager)
+    expect(tagManager).toBeDefined()
+  })
+})
+```
 
 <!-- signup, redirects -->
 
 #### Mobile and Desktop Layout
-Since there is significant variance in screen sizes, there are a lot cases need to be tested here.
+Since there is significant variance in screen sizes, there are a lot cases that need to be tested here.
 
 ```js
 const devices = require('puppeteer/DeviceDescriptors');
@@ -153,19 +185,47 @@ describe('Desktop', () => {
 #### Seo checks
 Since search engines crawl your production website, it may be a good idea to check your pages seo performance. However, even if below examples handles this issue on test cases, you may want to generate a score and corresponding report.
 
-### Selenium and other testing tools
+```js
+describe('SEO', () => {
+  beforeAll(async () => {
+    await page.goto('https://designisdead.com/')
+  })
 
-<!--https://www.npmjs.com/package/selenium-webdriver-->
+  it('should display "Design is Dead" text on title', async () => {
+    await expect(page.title()).resolves.toMatch('Design is Dead')
+  })
+
+  it('should have description meta-tag', async () => {
+    const descriptionContent = await page.$eval("head > meta[name='description']", element => element.content);
+    
+    expect(descriptionContent).toBeDefined();
+  })
+
+  it('should have a headline', async () => {
+    const headlines = await page.$$('h1')
+
+    expect(headlines.length).toBe(1)
+  })
+})
+```
+
+## Selenium and other testing tools
+Puppeteer is not the only tool that provides higher level API to manage and automate browsers. [Playwright](https://www.npmjs.com/package/playwright) is an alternative Node library that supports Chromium, Firefox and WebKit. It is developed by the same team built Puppeteer and its API is very similar to Puppeteer. Another options is [Selenium](https://www.selenium.dev/). It supports all the major browsers. Futher, you can use Selenium with Java, Python, Ruby, C#, JavaScript, Perl and PHP.
 
 ## References:
-[1] https://martinfowler.com/articles/practical-test-pyramid.html
-[2] Mike Cohn, Succeeding with Agile
+- [1] https://martinfowler.com/articles/practical-test-pyramid.html
+- [2] Mike Cohn, Succeeding with Agile
+- [3] https://www.lambdatest.com/blog/why-selenium-automation-testing-in-production-is-pivotal-for-your-next-release/
 
-Add this also:
-https://martinfowler.com/bliki/TestPyramid.html 
-https://kentcdodds.com/blog/write-tests
-https://www.freecodecamp.org/news/why-end-to-end-testing-is-important-for-your-team-cb7eb0ec1504/
-https://blogs.dropbox.com/tech/2019/05/athena-our-automated-build-health-management-system/
-https://medium.com/coursera-engineering/improving-end-to-end-testing-at-coursera-using-puppeteer-and-jest-5f1bac9cd176
+## Suggested Readings:
+- https://martinfowler.com/bliki/TestPyramid.html
+- https://www.freecodecamp.org/news/why-end-to-end-testing-is-important-for-your-team-cb7eb0ec1504/
+- https://blogs.dropbox.com/tech/2019/05/athena-our-automated-build-health-management-system/
+- https://medium.com/coursera-engineering/improving-end-to-end-testing-at-coursera-using-puppeteer-and-jest-5f1bac9cd176
+- Running Puppeteer on serverless: https://github.com/alixaxel/chrome-aws-lambda
+- https://medium.com/@ymcatar/visualization-on-steroid-using-headless-browser-to-auto-refresh-google-data-studio-dashboards-c195e68f10b
 
 ## Acknowledgements
+Thanks to xxx for sharing their valuable ideas and checking draft version of this blog post.
+
+-- Mustafa İlhan, 2020, İzmir
