@@ -104,6 +104,7 @@ pixelmatch(img1.data, img2.data, diff.data, width, height, {threshold: 0.9});
 fs.writeFileSync('diff.png', PNG.sync.write(diff));
 ```
 
+<!--
 <img style="float: left; padding: 0 10px 10px 0" src="img/version1.png" width="30%" align="left">
 <img style="float: left; padding: 0 10px 10px 0" src="img/version2.png" width="30%" align="left">
 <img style="float: left; padding: 0 10px 10px 0" src="img/diff1-2.png" width="30%" align="left">
@@ -113,6 +114,15 @@ fs.writeFileSync('diff.png', PNG.sync.write(diff));
 <img style="float: left; padding: 0 10px 10px 0" src="img/diff1-3.png" width="30%">
 
 <div style="clear: both"></div>
+-->
+
+| ![Version 1](img/version1.png) | ![Version 2](img/version2.png) | ![Diff 1-2](img/diff1-2.png) |
+|:--:|:--:|:--:|
+| Version 1 | Version 2 | Diff 1-2 |
+
+| ![Version 1](img/version1.png) | ![Version 3](img/version3.png) | ![Diff 1-3](img/diff1-3.png) |
+|:--:|:--:|:--:|
+| Version 1 | Version 3 | Diff 1-3 |
 
 Be aware that some of image comparision tools find differences by checking the pixel difference, therefore, if the text is changed, they will show it as a change.
 
