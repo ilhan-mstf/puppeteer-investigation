@@ -218,7 +218,7 @@ describe('SEO', () => {
 Puppeteer is not the only tool that provides higher level API to manage and automate browsers. [Playwright](https://www.npmjs.com/package/playwright) is an alternative Node library that supports Chromium, Firefox and WebKit. It is developed by the same team built Puppeteer and its API is very similar to Puppeteer. Another options is [Selenium](https://www.selenium.dev/). It supports all the major browsers. Futher, you can use Selenium with Java, Python, Ruby, C#, JavaScript, Perl and PHP.
 
 ## Conclusion
-In this blog, we go over the levels of software testing and discuss the use of cases of end-to-end tests. Later, we look into the details of Puppeteer as an end-to-end test tool by giving some examples. 
+In this blog, we go over the levels of software testing and discuss the use cases of end-to-end tests. Later, we look into the details of Puppeteer as an end-to-end test tool by giving some examples. 
 
 ## References:
 - [1] https://martinfowler.com/articles/practical-test-pyramid.html
