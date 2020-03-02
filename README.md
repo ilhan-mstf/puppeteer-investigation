@@ -1,16 +1,16 @@
 # Automated tests with Puppeteer
-Software testing is a serious and required task to reach certain quality. This blog post focuses on how it can be automated with Puppeteer. Before going into the details of Puppeteer, we should go over software testing and clearify the concepts related with it.
+Software testing is a serious and required task to reach a certain quality. This blog post focuses on how it can be automated with Puppeteer. Before going into the details of Puppeteer, we should go over software testing and clarify the concepts related to it.
 
 ## Software Testing
-"Production-ready software requires testing before it goes into production" [1]. One approach is to follow manual testing and the other approach is to automate whole testing process. "It's obvious that testing all changes manually is time-consuming, repetitive [, not scalable] and tedious. Repetitive is boring, boring leads to mistakes" [1] that we don't want. Therefore, automation is a great alternative for those repetitive tasks. Further, automation of tests can deliver requested development pace and reliability of the software product, especially in a massive scale. In addition to these, ensuring the reliability and stability of the software is also very important for the developers in order not to lose time on bugs created by changing code blocks. Specifically, it becomes very curial when team size increases.
+"Production-ready software requires testing before it goes into production" [1]. One approach is to follow manual testing and the other approach is to automate the whole testing process. "It's obvious that testing all changes manually is time-consuming, repetitive [, not scalable] and tedious. Repetitive is boring, boring leads to mistakes" [1] that we don't want. Therefore, automation is a great alternative for those repetitive tasks. Further, automation of tests can deliver requested development pace and reliability of the software product, especially on a massive scale. In addition to these, ensuring the reliability and stability of the software is also very important for the developers in order not to lose time on bugs created by changing code blocks. Specifically, it becomes very curial when team size increases.
 
-Test pyramid [2] is a key concept to follow when you want to write automated tests in your software. This concept defines how much tests you should add into your software for each level. There are three layers of this pyramid:
-- Unit Tests 
+Test pyramid [2] is a key concept to follow when you want to write automated tests in your software. This concept defines how much tests you should add to your software for each level. There are three layers of this pyramid:
+- **Unit Tests**
   - Tests that cover isolated pieces of code, e.g. functions, etc.
-- Service Tests 
-  - Currently, this is actually accepted as Integration Tests by the community. Tests that cover connected pieces of application, e.g. database, filesystem, etc.
-- User Interface Tests
-  - Again, this is actually accepted as End-to-End Tests by the community. Tests that cover whole journey of a functionality from user interaction to services, e.g. login flow, purchase flow, etc.
+- **Service Tests** (Currently, this is accepted as **Integration Tests** by the community)
+  - Tests that cover connected pieces of the application, e.g. database, filesystem, etc.
+- **User Interface Tests** (Again, this is accepted as **End-to-End Tests** by the community, right now.)
+  - Tests that cover the whole journey of functionality from user interaction to services, e.g. login flow, purchase flow, etc.
 
 ![Test Pyramid](img/testPyramid.png)
 
@@ -18,23 +18,23 @@ Generally, this pyramid suggests that:
 - "Write tests with different granularity" [1]
 - "The more high-level you get the fewer tests you should have" [1]
 
-However, this approach may not suit for each case. In your software, for instance, you may have less business logic and more integration. In this case, you may want to add more integration tests to your software. Therefore, it is best to think how many tests you should write for each granularity. (You can check this post for more discussion: [https://kentcdodds.com/blog/write-tests](https://kentcdodds.com/blog/write-tests))
+However, this approach may not suit for each case. In your software, for instance, you may have less business logic and more integration. In this case, you may want to add more integration tests to your software. Therefore, it is best to think of how many tests you should write for each granularity. (You can check this post for more discussion: [https://kentcdodds.com/blog/write-tests](https://kentcdodds.com/blog/write-tests))
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">expect(umbrellaOpens).toBe(true)<br><br>tests: 1 passed, 1 total<br><br>**all tests passed** <a href="https://t.co/p6IKO7KDuy">pic.twitter.com/p6IKO7KDuy</a></p>&mdash; Erin 🐠 (@erinfranmc) <a href="https://twitter.com/erinfranmc/status/1148986961207730176?ref_src=twsrc%5Etfw">July 10, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-As this blog post is related with automated tests with Puppeteer, we need to discuss more end-to-end tests since Puppeteer is more appropriate for them.
+As this blog post is related to automated tests with Puppeteer, we need to discuss more end-to-end tests since Puppeteer is more appropriate for them.
 
 ### When do you really need end-to-end testing?
-End to end tests are useful to identify problems in the user journeys. User journeys are the flows that a user can follow in your application. Therefore, the idea of end-to-end test is to imitate user's behaviour in certain flows from start to end to unsure that everything works as expected. Running end-to-end tests are slower than to unit tests since they can touch many components of your application or third party services. As a result, we can think them as expensive in terms of resources that reserved for them. For instance, assume that you want to run end-to-end test of a web application, to accomplish this you need to run a browser and this browser consumes significant amount of memory. Furthermore, initialization of browser and the other components takes a lot of time. Hence, only relying on end-to-end tests is not preferable in terms of development efficieny. Therefore, you may want to write end-to-end tests for high value interactions of your application.
+End-to-end tests are useful to identify problems in user journeys. User journeys are the flows that a user can follow in your application. Therefore, the idea of end-to-end tests is to imitate a user's behavior in certain flows from start to end to ensure that everything works as expected. Running end-to-end tests are slower than to unit tests since they can touch many components of your application or third party services. As a result, we can think of them as expensive in terms of resources that reserved for them. For instance, assume that you want to run end-to-end tests of a web application, to accomplish this you need to run a browser and this browser consumes a significant amount of memory. Furthermore, the initialization of the browser and the other components takes a lot of time. Hence, only relying on end-to-end tests is not preferable in terms of development efficiency. Therefore, you may want to write end-to-end tests for high-value interactions of your application.
 
 ## What is Puppeteer?
-[Puppeteer](https://pptr.dev/) provides a high-level API to control Chrome or Chromium programmatically. It is an open source Nodejs library. Puppeteer runs headless (i.e. a browser that doesn't have a user interface) by default, but can be configured to run full (non-headless) Chrome or Chromium.
+[Puppeteer](https://pptr.dev/) provides a high-level API to control Chrome or Chromium programmatically. It is an open-source Nodejs library. Puppeteer runs headless (i.e. a browser that doesn't have a user interface) by default, but can be configured to run full (non-headless) Chrome or Chromium.
 
 With this tool, you can run your web application on a browser and imitate user actions programmatically.
 
 ### Use cases:
 - Generate screenshots and PDFs of pages.
-- Crawl a SPA (Single-Page Application) and generate pre-rendered content (i.e. "SSR" (Server-Side Rendering)).
+- Crawl an SPA (Single-Page Application) and generate pre-rendered content (i.e. "SSR" (Server-Side Rendering)).
 - Automate form submission, UI testing, keyboard input, etc.
 - Create an up-to-date, automated testing environment. Run your tests directly in the latest version of Chrome using the latest JavaScript and browser features. Run regression and end-to-end tests.
 - Capture a timeline trace of your site to help diagnose performance issues.
@@ -43,17 +43,17 @@ With this tool, you can run your web application on a browser and imitate user a
 - Replicate user activity.
 
 ### Jest and Puppeteer
-Puppeteer API is not designed for testing and it doesn't provide you the whole functionality of a testing framework. Therefore, it can be used with [Jest](https://jestjs.io/) testing framework. The samples on this blog post use [jest-puppeteer](https://www.npmjs.com/package/jest-puppeteer) Nodejs library.
+Puppeteer API is not designed for testing and it doesn't provide you the whole functionality of a testing framework. Therefore, it can be used with [Jest](https://jestjs.io/) JavaScript testing framework. The samples on this blog post use [jest-puppeteer](https://www.npmjs.com/package/jest-puppeteer) Nodejs library. It provides all required configuration for writing integration tests using Puppeteer with Jest.
 
 ### Samples
-This section provides a couple of examples to give you better insights of Puppeteer's usage. They don't cover all the futures of the Puppeteer and this blog post doesn't aim to give you detailed information of Puppeteer API. You can build upon the given examples and explained concepts.
+This section provides a couple of examples to give you better insights into Puppeteer's usage. They don't cover all the futures of the Puppeteer and this blog post doesn't aim to give you the detailed information of Puppeteer API. You can build upon the given examples and explained concepts.
 
 The shown examples are also available at this [GitHub repository](https://github.com/ilhan-mstf/puppeteer-investigation). 
 
 #### Prerequistes and Installation
 You need:
-- Recent stable version of node.js
-- Recent stable version of yarn or npm
+- The recent stable version of node.js
+- The recent stable version of yarn or npm
 
 Examples have these dependencies:
 
@@ -67,6 +67,8 @@ Examples have these dependencies:
 ```
 
 `puppeteer` library downloads lastest Chrome executable. You can use `puppeteer-core` instead of `puppeteer` if you want to use existing Chrome executable in your system and pass the path of executable as a configuration option.
+
+You can run the tests with `yarn test` command.
 
 #### Taking Screenshot
 You can take screenshot of your website with different options such as setting viewport or emulated device.
@@ -85,7 +87,7 @@ const puppeteer = require('puppeteer');
 ```
 
 #### Comparing Screenshots
-You can detect changes visually by taking screenshots of different versions of your application. You can take screenshots with Puppeteer but you need another tool to compare them. This sample uses [`pixelmatch` library](https://www.npmjs.com/package/pixelmatch). Be aware that some of these tools find differences by checking the pixel difference, therefore, if the text is changed, they will show it as a change.
+You can detect changes visually by taking screenshots of different versions of your application. You can take screenshots with Puppeteer but you need another tool to compare them. This sample uses [`pixelmatch` library](https://www.npmjs.com/package/pixelmatch).
 
 ```js
 const fs = require('fs');
@@ -112,6 +114,8 @@ fs.writeFileSync('diff.png', PNG.sync.write(diff));
 
 <div style="clear: both"></div>
 
+Be aware that some of image comparision tools find differences by checking the pixel difference, therefore, if the text is changed, they will show it as a change.
+
 <!--
 ![Version 1](img/version1.png)
 ![Version 2](img/version2.png)
@@ -122,7 +126,7 @@ fs.writeFileSync('diff.png', PNG.sync.write(diff));
 -->
 
 #### Checking integration of third party applications
-You may use third party services, scripts etc. in your application. Therefore, it will be good idea to check that their integration wit your application works as expected.
+You may use third party services, scripts, etc. in your application. Therefore, it will be a good idea to check that their integration with your application works as expected.
 
 ```js
 describe('Analytics', () => {
@@ -138,7 +142,7 @@ describe('Analytics', () => {
 ```
 
 #### Mobile and Desktop Layout
-Since there is significant variance in screen sizes, there are a lot cases that need to be tested here.
+Since there is a significant variance in screen sizes, there are a lot of cases that need to be tested here.
 
 ```js
 const devices = require('puppeteer/DeviceDescriptors');
@@ -174,7 +178,7 @@ describe('Desktop', () => {
 ```
 
 #### Seo checks
-Since search engines crawl your production website, it may be a good idea to check your pages seo performance. However, even if below examples handles this issue on test cases, you may want to generate a score and corresponding report.
+Since search engines crawl your production website, it may be a good idea to check your pages' SEO performance. However, even if the below example handles this issue on test cases, you may want to generate a score and corresponding report.
 
 ```js
 describe('SEO', () => {
@@ -204,7 +208,7 @@ describe('SEO', () => {
 Puppeteer is not the only tool that provides higher level API to manage and automate browsers. [Playwright](https://www.npmjs.com/package/playwright) is an alternative Node library that supports Chromium, Firefox and WebKit. It is developed by the same team built Puppeteer and its API is very similar to Puppeteer. Another options is [Selenium](https://www.selenium.dev/). It supports all the major browsers. Futher, you can use Selenium with Java, Python, Ruby, C#, JavaScript, Perl and PHP.
 
 ## Conclusion
-In this blog, we go over the levels of software testing and discuss the use cases of end-to-end tests. Later, we look into the details of Puppeteer as an end-to-end test tool by giving some examples. 
+In this blog, we go over the levels of software testing and discuss the use of cases of end-to-end tests. Later, we look into the details of Puppeteer as an end-to-end test tool by giving some examples. 
 
 ## References:
 - [1] https://martinfowler.com/articles/practical-test-pyramid.html
