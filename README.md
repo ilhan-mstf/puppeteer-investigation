@@ -7,14 +7,18 @@ Software testing is a serious and required task to reach a certain quality. This
 Test pyramid [2] is a key concept to follow when you want to write automated tests in your software. This concept defines how much tests you should add to your software for each level. There are three layers of this pyramid:
 - **Unit Tests**
   - Tests that cover isolated pieces of code, e.g. functions, etc.
-- **Service Tests** (Currently, this is accepted as **Integration Tests** by the community)
-  - Tests that cover connected pieces of the application, e.g. database, filesystem, etc.
-- **User Interface Tests** (Again, this is accepted as **End-to-End Tests** by the community, right now.)
-  - Tests that cover the whole journey of functionality from user interaction to services, e.g. login flow, purchase flow, etc.
+- **Service Tests**
+  - Cohn's [2] naming convention about second level is not self-explanatory. This level generally is accepted as **Integration Tests** by the community. Integration Tests cover connected pieces of the application, e.g. database, filesystem, etc.
+- **User Interface Tests**
+  - With the modern front-end frameworks such as React.js, Vue.js, Angular.js user interface tests can be accomplished in the level of unit tests. Therefore, it becomes harder to set the right level for User Interface Testing, it actually spreads to different levels. However, we can put **End-to-End Tests** to the higher level. It is different than to User Interface Testing since it covers whole journey of functionality from user interaction to services, e.g. login flow, purchase flow, etc.
+
+<!--
+In the context of this discussion, an integrated test is a test that checks several layers of abstraction, or subsystems, in combination. Do not confuse it with the act of testing several classes or functions together.
+-->
 
 ![Test Pyramid](img/testPyramid.png)
 
-Generally, this pyramid suggests that:
+The key points of this pyramid:
 - "Write tests with different granularity" [1]
 - "The more high-level you get the fewer tests you should have" [1]
 
@@ -22,7 +26,11 @@ However, this approach may not suit for each case. In your software, for instanc
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">expect(umbrellaOpens).toBe(true)<br><br>tests: 1 passed, 1 total<br><br>**all tests passed** <a href="https://t.co/p6IKO7KDuy">pic.twitter.com/p6IKO7KDuy</a></p>&mdash; Erin 🐠 (@erinfranmc) <a href="https://twitter.com/erinfranmc/status/1148986961207730176?ref_src=twsrc%5Etfw">July 10, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-As this blog post is related to automated tests with Puppeteer, we need to discuss more end-to-end tests since Puppeteer is more appropriate for them.
+As this blog post is related to automated tests with Puppeteer, it can be used both end-to-end and user interface tests. Even if end-to-end tests are triggered from user interface, end-to-end tests covers whole flow and it doesn't have to check all possible cases on the UI.
+
+<!--
+Both UI and End-to-End tests can be done with it.
+-->
 
 ### When do you really need end-to-end testing?
 End-to-end tests are useful to identify problems in user journeys. User journeys are the flows that a user can follow in your application. Therefore, the idea of end-to-end tests is to imitate a user's behavior in certain flows from start to end to ensure that everything works as expected. Running end-to-end tests are slower than to unit tests since they can touch many components of your application or third party services. As a result, we can think of them as expensive in terms of resources that reserved for them. For instance, assume that you want to run end-to-end tests of a web application, to accomplish this you need to run a browser and this browser consumes a significant amount of memory. Furthermore, the initialization of the browser and the other components takes a lot of time. Hence, only relying on end-to-end tests is not preferable in terms of development efficiency. Therefore, you may want to write end-to-end tests for high-value interactions of your application.
@@ -46,7 +54,7 @@ With this tool, you can run your web application on a browser and imitate user a
 Puppeteer API is not designed for testing and it doesn't provide you the whole functionality of a testing framework. Therefore, it can be used with [Jest](https://jestjs.io/) JavaScript testing framework. The samples on this blog post use [jest-puppeteer](https://www.npmjs.com/package/jest-puppeteer) Nodejs library. It provides all required configuration for writing integration tests using Puppeteer with Jest.
 
 ### Samples
-This section provides a couple of examples to give you better insights into Puppeteer's usage. They don't cover all the futures of the Puppeteer and this blog post doesn't aim to give you the detailed information of Puppeteer API. You can build upon the given examples and explained concepts.
+This section provides a couple of examples to give you better insights into Puppeteer's usage. They don't cover all the features of Puppeteer and this blog post doesn't aim to give you detailed information of the Puppeteer API. You can build upon the given examples and explained concepts.
 
 The shown examples are also available at this [GitHub repository](https://github.com/ilhan-mstf/puppeteer-investigation). 
 
@@ -226,7 +234,9 @@ In this blog, we go over the levels of software testing and discuss the use case
 
 ## Suggested Readings:
 - https://martinfowler.com/bliki/TestPyramid.html
+- https://kentcdodds.com/blog/write-tests
 - https://www.freecodecamp.org/news/why-end-to-end-testing-is-important-for-your-team-cb7eb0ec1504/
+- https://www.symphonious.net/2015/04/30/making-end-to-end-tests-work/
 - https://blogs.dropbox.com/tech/2019/05/athena-our-automated-build-health-management-system/
 - https://medium.com/coursera-engineering/improving-end-to-end-testing-at-coursera-using-puppeteer-and-jest-5f1bac9cd176
 - Running Puppeteer on serverless: https://github.com/alixaxel/chrome-aws-lambda
@@ -237,3 +247,9 @@ In this blog, we go over the levels of software testing and discuss the use case
 Thanks to xxx for sharing their valuable ideas and checking draft version of this blog post.
 
 -- Mustafa İlhan, 2020, İzmir
+
+
+<!--
+- Capabilities of web driver
+- Since tests that interact with browsers are usually slow, consider increasing timeouts  
+-->
