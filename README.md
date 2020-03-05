@@ -223,7 +223,7 @@ describe('SEO', () => {
 ```
 
 #### Login
-One of the important features of web application is to log in user's account. It is also an example of End-to-End tests.
+One of the significant features of web applications is to log in user's account. It can be count as an example of End-to-End tests since it communicate through back-end services.
 
 ```js
 // put GITHUB_USER and GITHUB_PWD values to .env file
