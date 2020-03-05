@@ -222,6 +222,29 @@ describe('SEO', () => {
 })
 ```
 
+#### Login
+One of the important features of web application is to log in user's account. It is also an example of End-to-End tests.
+
+```js
+// put GITHUB_USER and GITHUB_PWD values to .env file
+require('dotenv').config()
+
+describe('Github - Login', () => {
+  beforeAll(async () => {
+    await page.goto('https://github.com/login')
+  })
+
+  it('should log in and redirect', async () => {
+    await page.type('#login_field', process.env.GITHUB_USER)
+    await page.type('#password', process.env.GITHUB_PWD)
+    await page.click('[name="commit"]', {waitUntil: 'domcontentloaded'})
+    const uname = await page.$eval('#account-switcher-left > summary > span.css-truncate.css-truncate-target.ml-1', e => e.innerText)
+    
+    await expect(uname).toMatch(process.env.GITHUB_USER)
+  })
+})
+```
+
 ## Selenium and other tools to automate browsers
 Puppeteer is not the only tool that provides higher level API to manage and automate browsers. [Playwright](https://www.npmjs.com/package/playwright) is an alternative Node library that supports Chromium, Firefox and WebKit. It is developed by the same team built Puppeteer and its API is very similar to Puppeteer. Another options is [Selenium](https://www.selenium.dev/). It supports all the major browsers. Futher, you can use Selenium with Java, Python, Ruby, C#, JavaScript, Perl and PHP.
 
@@ -239,6 +262,7 @@ In this blog, we go over the levels of software testing and discuss the use case
 - https://www.symphonious.net/2015/04/30/making-end-to-end-tests-work/
 - https://blogs.dropbox.com/tech/2019/05/athena-our-automated-build-health-management-system/
 - https://medium.com/coursera-engineering/improving-end-to-end-testing-at-coursera-using-puppeteer-and-jest-5f1bac9cd176
+- Puppeteer example scripts: https://github.com/checkly/puppeteer-examples
 - Running Puppeteer on serverless: https://github.com/alixaxel/chrome-aws-lambda
 - https://medium.com/@ymcatar/visualization-on-steroid-using-headless-browser-to-auto-refresh-google-data-studio-dashboards-c195e68f10b
 - https://www.lambdatest.com/blog/why-selenium-automation-testing-in-production-is-pivotal-for-your-next-release/
