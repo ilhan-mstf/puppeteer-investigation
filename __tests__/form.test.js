@@ -9,7 +9,7 @@ describe('Design is Dead - Layout', () => {
     await contact.click()
     const submit = await page.waitForSelector("#_form_10_submit")
     await submit.click()
-    const className = await page.evaluate(() => document.querySelector('input[name=fullname]').className);
+    const className = await page.evaluate(() => document.querySelector('input[name=fullname]').className)
     
     expect(className).toEqual(expect.stringContaining('_has_error'))
   })
