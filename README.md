@@ -2,7 +2,7 @@
 Software testing is a serious and required task to reach a certain quality. This blog post focuses on how it can be automated with Puppeteer. Before going into the details of Puppeteer, we should go over software testing and clarify the concepts related to it.
 
 ## Software Testing
-"Production-ready software requires testing before it goes into production" [1]. One approach is to follow manual testing and the other approach is to automate the whole testing process. "It's obvious that testing all changes manually is time-consuming, repetitive [, not scalable] and tedious. Repetitive is boring, boring leads to mistakes" [1] that we don't want. Therefore, automation is a great alternative for those repetitive tasks. Further, automation of tests can deliver requested development pace and reliability of the software product, especially on a massive scale. In addition to these, ensuring the reliability and stability of the software is also very important for the developers in order not to lose time on bugs created by changing code blocks. Specifically, it becomes very curial when team size increases.
+"Production-ready software requires testing before it goes into production" [1]. Here, one approach is to follow manual testing and the other one is to automate the whole testing process. "It's obvious that testing all changes manually is time-consuming, repetitive [, not scalable] and tedious. Repetitive is boring, boring leads to mistakes" [1] that we don't want. Therefore, automation is a great alternative for those repetitive tasks. Further, automation of tests can deliver requested development pace and reliability of the software product, especially on a massive scale. In addition to these, ensuring the reliability and stability of the software is also very important for the developers in order not to lose time on bugs created by changing code blocks. Specifically, it becomes very curial when team size increases.
 
 Test pyramid [2] is a key concept to follow when you want to write automated tests in your software. This concept defines how much tests you should add to your software for each level. There are three layers of this pyramid:
 - **Unit Tests**
@@ -33,10 +33,10 @@ Both UI and End-to-End tests can be done with it.
 -->
 
 ### When do you really need end-to-end testing?
-End-to-end tests are useful to identify problems in user journeys. User journeys are the flows that a user can follow in your application. Therefore, the idea of end-to-end tests is to imitate a user's behavior in certain flows from start to end to ensure that everything works as expected. Running end-to-end tests are slower than to unit tests since they can touch many components of your application or third party services. As a result, we can think of them as expensive in terms of resources that reserved for them. For instance, assume that you want to run end-to-end tests of a web application, to accomplish this you need to run a browser and this browser consumes a significant amount of memory. Furthermore, the initialization of the browser and the other components takes a lot of time. Hence, only relying on end-to-end tests is not preferable in terms of development efficiency. Therefore, you may want to write end-to-end tests for high-value interactions of your application.
+End-to-end tests are useful to identify problems in user journeys. User journeys are the flows that a user can follow in your application. Therefore, the idea of end-to-end tests is to imitate a user's behavior in certain flows from start to end to ensure that everything works as expected. Running end-to-end tests are slower than to unit tests since they can touch many components of your application or third party services. As a result, we can think of them as expensive in terms of resources that reserved for them. For instance, assume that you want to run end-to-end tests of a web application, to accomplish this you need to run a browser and this browser consumes significant amount of memory. Furthermore, the initialization of the browser and the other components takes a lot of time. Hence, only relying on end-to-end tests is not preferable in terms of development efficiency. Therefore, you may want to write end-to-end tests for high-value interactions of your application such as checkout, login, etc.
 
 ## What is Puppeteer?
-[Puppeteer](https://pptr.dev/) provides a high-level API to control Chrome or Chromium programmatically. It is an open-source Nodejs library. Puppeteer runs headless (i.e. a browser that doesn't have a user interface) by default, but can be configured to run full (non-headless) Chrome or Chromium.
+[Puppeteer](https://pptr.dev/) provides a high-level API to control Chrome or Chromium programmatically. It is an open-source Nodejs library. Puppeteer runs headless (i.e. a browser that doesn't have a user interface) by default, but it can be configured to run full (non-headless) Chrome or Chromium.
 
 With this tool, you can run your web application on a browser and imitate user actions programmatically.
 
@@ -132,7 +132,7 @@ fs.writeFileSync('diff.png', PNG.sync.write(diff));
 |:--:|:--:|:--:|
 | Version 1 | Version 3 | Diff 1-3 |
 
-Be aware that some of image comparision tools find differences by checking the pixel difference, therefore, if the text is changed, they will show it as a change.
+Be aware that some of image comparision tools find differences by checking the pixel difference, therefore, if the text is changed, they will show it as a change. In other words, if you change your content, you will see it as a difference.
 
 <!--
 ![Version 1](img/version1.png)
@@ -223,7 +223,7 @@ describe('SEO', () => {
 ```
 
 #### Login
-One of the significant features of web applications is to log in user's account. It can be count as an example of End-to-End tests since it communicate through back-end services.
+One of the significant features of web applications is to log in user's account. It can be count as an example of End-to-End tests since back-end services involve to the process.
 
 ```js
 // put GITHUB_USER and GITHUB_PWD values to .env file
@@ -268,7 +268,7 @@ In this blog, we go over the levels of software testing and discuss the use case
 - https://www.lambdatest.com/blog/why-selenium-automation-testing-in-production-is-pivotal-for-your-next-release/
 
 ## Acknowledgements
-Thanks to xxx for sharing their valuable ideas and checking draft version of this blog post.
+Thanks to Kris Barnhoorn and Manon Erb for sharing their valuable ideas and checking draft version of this blog post.
 
 -- Mustafa İlhan, 2020, İzmir
 
